@@ -14,11 +14,11 @@ def index():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    Locality = request.form.get('Locality')
-    BHK = request.form.get('BHK')
-    Bathroom = float(request.form.get('Bathroom'))
-    Per_Sqft = float(request.form.get('Per_Sqft'))
-    Area = float(request.form.get('Area'))
+    Locality = request.form['Locality']
+    BHK = request.form['BHK']
+    Bathroom = float(request.form['Bathroom'])
+    Per_Sqft = float(request.form['Per_Sqft'])
+    Area = float(request.form['Area'])
     prediction = pipe.predict(pd.DataFrame(data=[(Area,BHK,Bathroom,Locality,Per_Sqft)],columns=['Area','BHK','Bathroom','Locality','Per_Sqft']))[0]
     return render_template('index.html', prediction = str(prediction))
 if __name__ == '__main__':
