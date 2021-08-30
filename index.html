@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>House Price Predictor</title>
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+      <div class="row">
+        <div class="card" style="width: 100%; height: 100%; margin-top: 50px">
+          <div class="card-header" style="text-align: center">
+            <h1>Welcome to House Price Predictor</h1>
+          </div>
+          <div class="card-body">
+            <div class="col-md-12 form-group" style="text-align: center">
+              <h4>Want to predict the price of a new house in Delhi? Try filling the details....</h4>
+              <br>
+            </div>
+              <form action="http://127.0.0.1:5000/prediction" method="post" accept-charset="utf-8">
+                <div class="row">
+                  <div class="col-md-6 form-group" style="text-align: center">
+                    <label><b>Select the Location:</b></label>
+                    <select class="selectpicker form-control" id="Locality" name="Locality" required = "1">
+                           {% for Locality in location%}
+                              <option value = "{{ Locality }}">{{ Locality }}</option>
+                           {% endfor %}
+                    </select>
+                    <br>
+                  </div>
+                  <div class="col-md-6 form-group" style="text-align: center">
+                    <label><b>Enter BHK:</b></label>
+                    <input type="text" class ="form-control" name="BHK" id="BHK" value="" placeholder="Enter BHK">
+                    <br>
+                  </div>
+                  <div class="col-md-6 form-group" style="text-align: center">
+                    <label><b>Enter no. of Bathrooms:</b></label>
+                    <input type="text" class="form-control" name="Bathroom" id="Bathroom" value="" placeholder="Enter no. of bathrooms">
+                     <br>
+                  </div>
+                  <div class="col-md-6 form-group" style="text-align: center">
+                    <label><b>Enter SquareFeet:</b></label>
+                    <input type="text" class="form-control" name="Per_Sqft" id="Per_Sqft" value="" placeholder="Enter SquareFeet">
+                     <br>
+                  </div>
+                  <div class="col-md-6 form-group" style="text-align: center">
+                    <label><b>Enter Area:</b></label>
+                    <input type="text" class="form-control" name="Area" id="Area" value="" placeholder="Enter Area">
+                     <br>
+                  </div>
+                  <br>
+                  <div class="col-md-12 form-group">
+                    <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                  </div>
+                   <br>
+                </div>
+              </form>
+              <br>
+
+
+              <div class="col-md-12 form-group" style="text-align: center">
+                <h3><span id="prediction"></span></h3>
+
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <script>
+        function form_handler(event){
+          event.preventDefault();
+        }
+        function send_data(){
+          document.querySelector('form').addEventListener("submit",form_handler);
+          var fd = new FormData(document.querySelector('form'));
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST','/predict',true);
+          document.getElementById("prediction").innerHTML = "Wait predicting price!....";
+          xhr.onreadystatechange = function(){
+            if(xhr.readyState == XMLHttpRequest.DONE){
+              document.getElementById("prediction").innerHTML = "Prediction: ₹ "+xhr.responseText;
+            }
+          };
+
+          xhr.onload = function(){};
+          xhr.send(fd);
+        }
+
+    </script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGoWe/6oMVemdAVTMs2xqW4mwXrXsW0L84Iytr2wi5v2QjrP/xp" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+  </body>
+</html>
