@@ -55,45 +55,23 @@
                   </div>
                   <br>
                   <div class="col-md-12 form-group">
-                    <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                    <input type = "submit" class="btn btn-primary form-control">Predict Price</input>
+                    
                   </div>
+                   <div>
+                     <b>prediction:{{prediction}}</b>
+                </div>
                    <br>
                 </div>
               </form>
               <br>
 
-
-              <div class="col-md-12 form-group" style="text-align: center">
-                <h3><span id="prediction"></span></h3>
-
-              </div>
           </div>
         </div>
 
       </div>
 
     </div>
-    <script>
-        function form_handler(event){
-          event.preventDefault();
-        }
-        function send_data(){
-          document.querySelector('form').addEventListener("submit",form_handler);
-          var fd = new FormData(document.querySelector('form'));
-          var xhr = new XMLHttpRequest();
-          xhr.open('POST','/predict',true);
-          document.getElementById("prediction").innerHTML = "Wait predicting price!....";
-          xhr.onreadystatechange = function(){
-            if(xhr.readyState == XMLHttpRequest.DONE){
-              document.getElementById("prediction").innerHTML = "Prediction: ₹ "+xhr.responseText;
-            }
-          };
-
-          xhr.onload = function(){};
-          xhr.send(fd);
-        }
-
-    </script>
 
 
 
