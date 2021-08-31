@@ -12,7 +12,7 @@ def index():
     return render_template('index.html', location = location)
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/', methods=['POST'])
 def predict():
     Locality = request.form['Locality']
     BHK = request.form['BHK']
