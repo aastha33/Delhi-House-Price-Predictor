@@ -21,6 +21,6 @@ def predict():
     Per_Sqft = float(request.form['Per_Sqft'])
     Area = float(request.form['Area'])
     prediction = pipe.predict(pd.DataFrame(data=[(Area,BHK,Bathroom,Locality,Per_Sqft)],columns=['Area','BHK','Bathroom','Locality','Per_Sqft']))[0]
-    return str(prediction)
+    return render_template('index.html', prediction = prediction)
 if __name__ == '__main__':
     app.run(debug=True)
